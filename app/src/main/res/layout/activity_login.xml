@@ -9,6 +9,20 @@
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:fontFamily="@font/bad_script"
+        android:text="instagramClone"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+        android:textColor="#FFBB86FC"
+        android:textStyle="bold|italic" />
+
     <EditText
         android:id="@+id/etUsername"
         android:layout_width="match_parent"
@@ -32,5 +46,16 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Login" />
+
+    <Button
+        android:id="@+id/btnSignup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btnLogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:text="sign up" />
 
 </LinearLayout>
