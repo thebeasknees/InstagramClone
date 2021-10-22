@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostsFragment extends Fragment {
+    private SwipeRefreshLayout swipeContainer;
 
     public static final String TAG = "PostsFragment";
     private RecyclerView rvPosts;
@@ -40,7 +42,21 @@ public class PostsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_posts, container, false);
+        View view = inflater.inflate(R.layout.fragment_posts, container, false);
+        swipeContainer = (SwipeRefreshLayout)view.findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryPosts();
+            }
+        });
+
+        swipeContainer.setColorSchemeColors(
+                getResources().getColor(android.R.color.holo_blue_bright),
+                getResources().getColor(android.R.color.holo_green_light),
+                getResources().getColor(android.R.color.holo_orange_light),
+                getResources().getColor(android.R.color.holo_red_light));
+                return view;
     }
 
     @Override
@@ -59,6 +75,7 @@ public class PostsFragment extends Fragment {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
         query.setLimit(20);
+        query.addDescendingOrder(Post.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
@@ -66,11 +83,14 @@ public class PostsFragment extends Fragment {
                     Log.e(TAG, "Issue with getting posts", e);
                     return;
                 }
+                adapter.clear();
+                adapter.addAll(posts);
+                swipeContainer.setRefreshing(false);
                 for(Post post : posts) {
                     Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
                 }
-                allPosts.addAll(posts);
-                adapter.notifyDataSetChanged();
+                //allPosts.addAll(posts);
+                //adapter.notifyDataSetChanged();
             }
         });
     }
