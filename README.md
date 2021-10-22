@@ -16,7 +16,7 @@ The following **required** functionality is completed:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='InstagramCloneWalkthroughParse.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='InstragramCloneWalkthroughParse.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
